@@ -4,12 +4,12 @@ all:
     munich:
       ansible_host: 192.168.5.10
       ansible_connection: ssh
-      ansible_user: student
+      ansible_user: ubuntu
       ansible_ssh_pass: ubuntu
       py_env: /usr/bin/python3
     nuremberg:
       ansible_host: 192.168.5.10
       ansible_connection: ssh
-      ansible_user: student
+      ansible_user: ubuntu
       ansible_ssh_pass: ubuntu
       py_env: /usr/bin/python3

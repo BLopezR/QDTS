@@ -1,5 +1,5 @@
 import click
-from src import osmclientlib
+#from src import osmclientlib
 from src import orchestratorlib
 import yaml
 import logging
@@ -106,15 +106,15 @@ def start(config_file, inv_file, osm_hostname, vim_account, ssh_key):
 
 # Command to stop the simulated qkd-network, deleting 
 # the ns-instace deployed with OSM
-@cli.command()
-@click.option('--osm_hostname', type=str, required=True,
-              default=None, help="osm host ip-address to handle the ns removal")
-@click.option('--ns_instance', type=str, required=True,
-              default=None, help="ns instance to be removed")
-def remove_instance(osm_hostname, ns_instance):
-    """ Function to remove an OSM NS instance"""
-    logger.info(f'Deleting OSM NS instance {ns_instance}')
-    osmclientlib.remove_osm_nsd(instance_name=ns_instance, osm_hostname=osm_hostname)
+# @cli.command()
+# @click.option('--osm_hostname', type=str, required=True,
+#               default=None, help="osm host ip-address to handle the ns removal")
+# @click.option('--ns_instance', type=str, required=True,
+#               default=None, help="ns instance to be removed")
+# def remove_instance(osm_hostname, ns_instance):
+#     """ Function to remove an OSM NS instance"""
+#     logger.info(f'Deleting OSM NS instance {ns_instance}')
+#     osmclientlib.remove_osm_nsd(instance_name=ns_instance, osm_hostname=osm_hostname)
     
 # Command to stop the simulated qkd-network stopping SimulaQron
 # (thought for predeployed machine pools)
