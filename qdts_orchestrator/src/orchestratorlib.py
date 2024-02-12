@@ -73,6 +73,31 @@ start_play = [
 },    
 ]
 
+stop_play = [
+    {
+    "name": "Stopping",
+    "hosts": "all",
+    "tasks":[
+        {
+            "name": "Stopping python processes",
+            "shell":"killall -s SIGKILL python",
+            "ignore_errors": True
+        },
+        {
+            "name": "Stopping SimulaQron",
+            "shell":{
+                "chdir": "~/qkd_workspace/",
+                "cmd": "{{py_env}}/python3 ~/.local/bin/simulaqron stop"
+
+            },
+            "ignore_errors": True
+        },
+    ]
+
+},    
+]
+
+
 
 # Auxiliary functions used by install()
 def get_provisioning_play(content, host):
@@ -145,3 +170,6 @@ def run(inv_file):
     end_time = time.time()
     total_time = end_time-start_time
     logger.info(f'Time for executing all the qdts_nodes: {total_time}')
+
+def stop(inv_file):
+    ansible_runner.run(playbook = stop_play, inventory = inv_file)
