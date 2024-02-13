@@ -21,7 +21,7 @@ def run():
     client2 = Client004()
 
     client1.connect("192.168.5.10")
-    client2.connect("192.168.5.10")
+    client2.connect("192.168.5.20")
 
     ttl = 100000
     key_chunk_size = key_size_bytes

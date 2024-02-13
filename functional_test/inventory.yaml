@@ -1,15 +1,21 @@
 ---
 all:
   hosts:
-    munich:
-      ansible_host: 192.168.5.10
+    sevilla:
+      ansible_host: 192.168.7.10
       ansible_connection: ssh
       ansible_user: ubuntu
       ansible_ssh_pass: ubuntu
-      py_env: /usr/bin/python3
-    nuremberg:
-      ansible_host: 192.168.5.10
+      py_env: /usr/bin/
+    huelva:
+      ansible_host: 192.168.7.10
       ansible_connection: ssh
       ansible_user: ubuntu
       ansible_ssh_pass: ubuntu
-      py_env: /usr/bin/python3
+      py_env: /usr/bin/
+    cadiz:
+      ansible_host: 192.168.7.30
+      ansible_connection: ssh
+      ansible_user: ubuntu
+      ansible_ssh_pass: ubuntu
+      py_env: /usr/bin/

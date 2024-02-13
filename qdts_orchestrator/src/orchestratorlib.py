@@ -15,18 +15,6 @@ install_play = [
     "tasks":
         [
             {
-                "name": "Installing python3-pip",
-                "become": "true",
-                "apt": "name=python3-pip state=present update_cache=true",
-                "retries": "5",
-                "delay": "30" 
-            },
-            {
-                "name": "Installing QKD node",
-                "become": "false", 
-                "shell": "/usr/bin/pip install qdts_node==0.1.8"
-            },
-            {
                 "name": "Creating qkd directory",
                 "file":{
                     "path": "~/qkd_workspace/",
@@ -65,7 +53,7 @@ start_play = [
             "name": "Start",
             "shell":{
                 "chdir": "~/qkd_workspace/",
-                "cmd": "{{py_env}}/python3 ~/.local/bin/qdts_node"
+                "cmd": "{{py_env}}python3 ~/.local/bin/qdts_node"
             },
         }
     ]
@@ -87,7 +75,7 @@ stop_play = [
             "name": "Stopping SimulaQron",
             "shell":{
                 "chdir": "~/qkd_workspace/",
-                "cmd": "{{py_env}}/python3 ~/.local/bin/simulaqron stop"
+                "cmd": "{{py_env}}python3 ~/.local/bin/simulaqron stop"
 
             },
             "ignore_errors": True

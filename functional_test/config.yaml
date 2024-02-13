@@ -4,12 +4,19 @@ config:
   application_interface: etsi-gs-qkd-004
   qkd_protocol: e91
 nodes:
-  - node_name: munich
-    node_ip: 192.168.5.10
+  - node_name: sevilla
+    node_ip: 192.168.7.10
     neighbour_nodes:
-      - nuremberg
-  - node_name: nuremberg
-    node_ip: 192.168.5.20
+      - huelva
+      - cadiz
+  - node_name: huelva
+    node_ip: 192.168.7.20
     neighbour_nodes:
-      - munich
+      - sevilla
+      - cadiz
+  - node_name: cadiz
+    node_ip: 192.168.7.30
+    neighbour_nodes:
+      - sevilla
+      - huelva
   
