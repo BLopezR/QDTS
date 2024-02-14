@@ -48,8 +48,8 @@ def run():
     print("Response: \n" + str(response))
 
 
-     print ("\n\n\nStream 2 (huelva - cadiz)")
-     response = client2.open_connect("app2@huelva","app3@cadiz",key_chunk_size,ttl, ksid = None)
+    print ("\n\n\nStream 2 (huelva - cadiz)")
+    response = client2.open_connect("app2@huelva","app3@cadiz",key_chunk_size,ttl, ksid = None)
     print("Response: \n" + str(response))
     ksid2 = response["ksid"]
 
