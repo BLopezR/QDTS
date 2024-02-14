@@ -19,9 +19,11 @@ def run():
 
     client1 = Client004()
     client2 = Client004()
+    client3 = Client004()
 
-    client1.connect("192.168.5.10")
-    client2.connect("192.168.5.20")
+    client1.connect("192.168.0.10")
+    client2.connect("192.168.0.20")
+    client3.connect("192.168.0.30")
 
     ttl = 100000
     key_chunk_size = key_size_bytes
@@ -29,8 +31,8 @@ def run():
     
     print("Sending open connects")
 
-    print("\n\n\nStream 1 (munich - nuremberg)")
-    response = client1.open_connect("app1@munich", "app2@nuremberg",key_chunk_size,ttl, ksid = None)
+    print("\n\n\nStream 1 (sevilla - huelva)")
+    response = client1.open_connect("app1@sevilla", "app2@huelva",key_chunk_size,ttl, ksid = None)
     print("Response: \n" + str(response))
     ksid1 = response["ksid"]
 
@@ -42,34 +44,34 @@ def run():
     #    exit()
     #print("[OK] PEER_NOT_CONNECTED with get key")
 
-    response = client2.open_connect("app1@munich", "app2@nuremberg",key_chunk_size,ttl, ksid = ksid1)
+    response = client2.open_connect("app1@sevilla", "app2@huelva",key_chunk_size,ttl, ksid = ksid1)
     print("Response: \n" + str(response))
 
 
-    # print ("\n\n\nStream 2 (nuremberg - salzburg)")
-    # response = client2.open_connect("app2@nuremberg","app3@salzburg",key_chunk_size,ttl, ksid = None)
-    # print("Response: \n" + str(response))
-    # ksid2 = response["ksid"]
+     print ("\n\n\nStream 2 (huelva - cadiz)")
+     response = client2.open_connect("app2@huelva","app3@cadiz",key_chunk_size,ttl, ksid = None)
+    print("Response: \n" + str(response))
+    ksid2 = response["ksid"]
 
-    # response = client3.open_connect("app2@nuremberg", "app3@salzburg",key_chunk_size,ttl, ksid = ksid2)
-    # print("Response: \n" + str(response))
+    response = client3.open_connect("app2@huelva", "app3@cadiz",key_chunk_size,ttl, ksid = ksid2)
+    print("Response: \n" + str(response))
 
 
 
-    # print("\n\n\nStream 3 (munich - salzburg)")
-    # response = client1.open_connect("app1@munich", "app3@salzburg",key_chunk_size,ttl, ksid = ksid3)
-    # print("Response: \n" + str(response))
+    print("\n\n\nStream 3 (sevilla - cadiz)")
+    response = client1.open_connect("app1@sevilla", "app3@cadiz",key_chunk_size,ttl, ksid = ksid3)
+    print("Response: \n" + str(response))
 
-    # response = client3.open_connect("app1@munich", "app3@salzburg",key_chunk_size,ttl, ksid = ksid3)
-    # print("Response: \n" + str(response))
+    response = client3.open_connect("app1@sevilla", "app3@cadiz",key_chunk_size,ttl, ksid = ksid3)
+    print("Response: \n" + str(response))
 
-    print("\n\n\nStream 4 (munich - nuremberg)")
+    print("\n\n\nStream 4 (sevilla - huelva)")
 
-    response = client1.open_connect("app1@munich", "app2@nuremberg",key_chunk_size,ttl, ksid = None)
+    response = client1.open_connect("app1@sevilla", "app2@huelva",key_chunk_size,ttl, ksid = None)
     print("Response: \n" + str(response))
     ksid4 = response["ksid"]
 
-    response = client2.open_connect("app1@munich", "app2@nuremberg",key_chunk_size,ttl, ksid = ksid4)
+    response = client2.open_connect("app1@sevilla", "app2@huelva",key_chunk_size,ttl, ksid = ksid4)
     print("Response: \n" + str(response))
 
 
@@ -117,27 +119,27 @@ def run():
 
         print("[OK] Test sample " + str(i) + ". Key: " + str(key1))
 
-    # print("Stream 3 tests")
-    # for i in range(N):
-    #     key1 = None
-    #     key2 = None
-    #     while key1 is None:
-    #         response = client1.get_key(ksid3)
-    #         if response["status"] == Status.SUCCESSFUL:
-    #             print(response)
-    #             key1 = response["key_buffer"]
-    #     while key2 is None:
-    #         response = client3.get_key(ksid3)
-    #         if response["status"] == Status.SUCCESSFUL:
-    #             print(response)
-    #             key2 = response["key_buffer"]
+    print("Stream 3 tests")
+    for i in range(N):
+        key1 = None
+        key2 = None
+        while key1 is None:
+            response = client1.get_key(ksid3)
+            if response["status"] == Status.SUCCESSFUL:
+                print(response)
+                key1 = response["key_buffer"]
+        while key2 is None:
+            response = client3.get_key(ksid3)
+            if response["status"] == Status.SUCCESSFUL:
+                print(response)
+                key2 = response["key_buffer"]
 
-    #     if key1 != key2:
-    #         print("[FAILED][Different buffer] Test sample " + str(i))
-    #         exit()
+        if key1 != key2:
+            print("[FAILED][Different buffer] Test sample " + str(i))
+            exit()
 
 
-    #     print("[OK] Test sample " + str(i) + ". Key: " + str(key1))
+        print("[OK] Test sample " + str(i) + ". Key: " + str(key1))
 
     print("Stream 4 tests")
     for i in range(N):
@@ -163,11 +165,11 @@ def run():
 
     print("Close validation")
 
-    # print("Closing stream 3")
-    # response = client1.close(ksid3)
-    # print(response)
-    # response = client3.close(ksid3)
-    # print(response)
+    print("Closing stream 3")
+    response = client1.close(ksid3)
+    print(response)
+    response = client3.close(ksid3)
+    print(response)
 
     print("Closing stream 4")
     response = client1.close(ksid4)
@@ -175,17 +177,17 @@ def run():
     response = client2.close(ksid4)
     print(response)
 
-    # print("Requesting keys for stream 3")
-    # r1 = client1.get_key(ksid3)
-    # print(r1)
-    # r2 = client3.get_key(ksid3)
-    # print(r2)
+    print("Requesting keys for stream 3")
+    r1 = client1.get_key(ksid3)
+    print(r1)
+    r2 = client3.get_key(ksid3)
+    print(r2)
 
-    # if r1["status"] != Status.STREAM_NOT_FOUND or r2["status"] != Status.STREAM_NOT_FOUND:
-    #     print("[FAILED] Get key does not respond with not found after close ")
-    #     exit()
+    if r1["status"] != Status.STREAM_NOT_FOUND or r2["status"] != Status.STREAM_NOT_FOUND:
+        print("[FAILED] Get key does not respond with not found after close ")
+        exit()
 
-    # print("[OK] Key not found for stream 3")
+    print("[OK] Key not found for stream 3")
 
     print("Requesting keys for stream 4")
     r1 = client1.get_key(ksid4)
@@ -222,67 +224,67 @@ def run():
 
         print("[OK] Test sample " + str(i) + ". Key: " + str(key1))
 
-    # print("Stream 2 tests")
-    # for i in range(2):
-    #     key1 = None
-    #     key2 = None
-    #     while key1 is None:
-    #         response = client2.get_key(ksid2)
-    #         if response["status"] == Status.SUCCESSFUL:
-    #             print(response)
-    #             key1 = response["key_buffer"]
-    #     while key2 is None:
-    #         response = client3.get_key(ksid2)
-    #         if response["status"] == Status.SUCCESSFUL:
-    #             print(response)
-    #             key2 = response["key_buffer"]
+    print("Stream 2 tests")
+    for i in range(2):
+        key1 = None
+        key2 = None
+        while key1 is None:
+            response = client2.get_key(ksid2)
+            if response["status"] == Status.SUCCESSFUL:
+                print(response)
+                key1 = response["key_buffer"]
+        while key2 is None:
+            response = client3.get_key(ksid2)
+            if response["status"] == Status.SUCCESSFUL:
+                print(response)
+                key2 = response["key_buffer"]
 
-    #     if key1 != key2:
-    #         print("[FAILED][Different buffer] Test sample " + str(i))
-    #         exit()
+        if key1 != key2:
+            print("[FAILED][Different buffer] Test sample " + str(i))
+            exit()
 
 
-    #     print("[OK] Test sample " + str(i) + ". Key: " + str(key1))
+        print("[OK] Test sample " + str(i) + ". Key: " + str(key1))
     
     print ("Opening new streams 3 and 4")
-    # print("\n\n\nStream 3 (munich - salzburg)")
-    # response = client1.open_connect("app1@munich", "app3@salzburg",key_chunk_size,ttl, ksid = ksid3)
-    # print("Response: \n" + str(response))
+    print("\n\n\nStream 3 (sevilla - cadiz)")
+    response = client1.open_connect("app1@sevilla", "app3@cadiz",key_chunk_size,ttl, ksid = ksid3)
+    print("Response: \n" + str(response))
 
-    # response = client3.open_connect("app1@munich", "app3@salzburg",key_chunk_size,ttl, ksid = ksid3)
-    # print("Response: \n" + str(response))
+    response = client3.open_connect("app1@sevilla", "app3@cadiz",key_chunk_size,ttl, ksid = ksid3)
+    print("Response: \n" + str(response))
 
-    print("\n\n\nStream 4 (munich - nuremberg)")
+    print("\n\n\nStream 4 (sevilla - huelva)")
 
-    response = client1.open_connect("app1@munich", "app2@nuremberg",key_chunk_size,ttl, ksid = None)
+    response = client1.open_connect("app1@sevilla", "app2@huelva",key_chunk_size,ttl, ksid = None)
     print("Response: \n" + str(response))
     ksid4 = response["ksid"]
 
-    response = client2.open_connect("app1@munich", "app2@nuremberg",key_chunk_size,ttl, ksid = ksid4)
+    response = client2.open_connect("app1@sevilla", "app2@huelva",key_chunk_size,ttl, ksid = ksid4)
     print("Response: \n" + str(response))
 
-    # print("Getting 3 keys from each")
-    # print("Stream 3 tests")
-    # for i in range(3):
-    #     key1 = None
-    #     key2 = None
-    #     while key1 is None:
-    #         response = client1.get_key(ksid3)
-    #         if response["status"] == Status.SUCCESSFUL:
-    #             print(response)
-    #             key1 = response["key_buffer"]
-    #     while key2 is None:
-    #         response = client3.get_key(ksid3)
-    #         if response["status"] == Status.SUCCESSFUL:
-    #             print(response)
-    #             key2 = response["key_buffer"]
+    print("Getting 3 keys from each")
+    print("Stream 3 tests")
+    for i in range(3):
+        key1 = None
+        key2 = None
+        while key1 is None:
+            response = client1.get_key(ksid3)
+            if response["status"] == Status.SUCCESSFUL:
+                print(response)
+                key1 = response["key_buffer"]
+        while key2 is None:
+            response = client3.get_key(ksid3)
+            if response["status"] == Status.SUCCESSFUL:
+                print(response)
+                key2 = response["key_buffer"]
 
-    #     if key1 != key2:
-    #         print("[FAILED][Different buffer] Test sample " + str(i))
-    #         exit()
+        if key1 != key2:
+            print("[FAILED][Different buffer] Test sample " + str(i))
+            exit()
 
 
-    #     print("[OK] Test sample " + str(i) + ". Key: " + str(key1))
+        print("[OK] Test sample " + str(i) + ". Key: " + str(key1))
 
     print("Stream 4 tests")
     for i in range(3):
@@ -314,17 +316,17 @@ def run():
     response = client2.close(ksid1)
     print(response)
 
-    # print("Closing stream 2")
-    # response = client2.close(ksid2)
-    # print(response)
-    # response = client3.close(ksid2)
-    # print(response)
+    print("Closing stream 2")
+    response = client2.close(ksid2)
+    print(response)
+    response = client3.close(ksid2)
+    print(response)
 
-    # print("Closing stream 3")
-    # response = client1.close(ksid3)
-    # print(response)
-    # response = client3.close(ksid3)
-    # print(response)
+    print("Closing stream 3")
+    response = client1.close(ksid3)
+    print(response)
+    response = client3.close(ksid3)
+    print(response)
 
     print("Closing stream 4")
     response = client1.close(ksid4)
